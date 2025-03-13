@@ -5,7 +5,7 @@ require("dotenv").config();
 const setupSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: process.env.CHAT_ORIGIN || "http://localhost:5173",
+      origin: "*",
       methods: ["GET", "POST"],
     },
   });

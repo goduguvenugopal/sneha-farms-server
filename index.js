@@ -5,6 +5,7 @@ const corsConfiguration = require("./config/cors");
 const connectDb = require("./config/dbConnection");
 const messageRoutes = require("./routes/messageRoutes");
 const setupSocket = require("./socket/socket");
+const updateRoutes = require("./routes/updateRoutes")
 
 const app = express();
 const server = http.createServer(app);
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/messages", messageRoutes);
+app.use("/updates", updateRoutes)
 
 // Setup WebSocket
 setupSocket(server);

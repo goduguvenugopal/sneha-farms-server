@@ -1,10 +1,10 @@
 const express = require("express");
+const router = express.Router();
 const {
   sendUpdates,
   getUpdate,
   deleteUpdate,
 } = require("../controllers/updateController");
-const router = express.Router();
 
 router.post("/send_update", sendUpdates);
 router.get("/get_update", getUpdate);

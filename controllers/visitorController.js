@@ -28,20 +28,22 @@ const saveVisitor = async (req, res) => {
 // get today visitors controller
 const getVisitors = async (req, res) => {
   try {
-    const {type} = req.query;
+    const { type } = req.query;
     const todayDate = new Date().toLocaleDateString("en-GB");
-    if ( type === "today") {
+    if (type === "today") {
       const todayVisitors = await Visitor.find({ date: todayDate });
       if (todayVisitors) {
         return res.status(200).json({ todayVisitors: todayVisitors.length });
       }
-    } else if ( type === "all") {
+    } else if (type === "all") {
       const allDays = await Visitor.find({});
       return res.status(200).json({ allDaysVisitors: allDays.length });
+    } else {
+      const todayVisitors = await Visitor.find({ date: type });
+      if (todayVisitors) {
+        return res.status(200).json({ todayVisitors: todayVisitors.length });
+      }
     }
- 
-    return res.status(400).json({ error: "Invalid query parameter" });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

@@ -7,17 +7,14 @@ const messageRoutes = require("./routes/messageRoutes");
 const setupSocket = require("./socket/socket");
 const updateRoutes = require("./routes/updateRoutes");
 const visitorRoutes = require("./routes/visitorRoute");
-const cors = require("cors")
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
 
-// Connect to MongoDB
-connectDb();
-
 // Middlewares
-// app.use(corsConfiguration);
-app.use(cors())
+app.use(corsConfiguration);
+// app.use(cors("*"));
 app.use(express.json());
 
 // Routes
@@ -30,4 +27,12 @@ setupSocket(server);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+server.listen(PORT, async () => {
+  try {
+    // Connect to MongoDB
+    await connectDb();
+    console.log(`🚀 Server running on port ${PORT}`);
+  } catch (error) {
+    console.error(error);
+  }
+});

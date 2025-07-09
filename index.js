@@ -7,6 +7,7 @@ const messageRoutes = require("./routes/messageRoutes");
 const setupSocket = require("./socket/socket");
 const updateRoutes = require("./routes/updateRoutes");
 const visitorRoutes = require("./routes/visitorRoute");
+const cors = require("cors")
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +16,8 @@ const server = http.createServer(app);
 connectDb();
 
 // Middlewares
-app.use(corsConfiguration);
+// app.use(corsConfiguration);
+app.use(cors())
 app.use(express.json());
 
 // Routes

@@ -3,7 +3,7 @@ const Visitor = require("../models/visitor");
 // creating visitor save controller
 const saveVisitor = async (req, res) => {
   try {
-    const { visitor_id } = req.body;
+    const { visitor_id, userName, location } = req.body;
     const todayDate = new Date().toLocaleDateString("en-GB");
     const isVisitorExit = await Visitor.findOne({
       visitor_id: visitor_id,
@@ -15,6 +15,8 @@ const saveVisitor = async (req, res) => {
     const saveVisitorData = new Visitor({
       visitor_id,
       date: todayDate,
+      userName,
+      location,
     });
 
     await saveVisitorData.save();
@@ -33,15 +35,15 @@ const getVisitors = async (req, res) => {
     if (type === "today") {
       const todayVisitors = await Visitor.find({ date: todayDate });
       if (todayVisitors) {
-        return res.status(200).json({ todayVisitors: todayVisitors.length });
+        return res.status(200).json({ todayVisitors: todayVisitors });
       }
     } else if (type === "all") {
       const allDays = await Visitor.find({});
-      return res.status(200).json({ allDaysVisitors: allDays.length });
+      return res.status(200).json({ allDaysVisitors: allDays });
     } else {
       const todayVisitors = await Visitor.find({ date: type });
       if (todayVisitors) {
-        return res.status(200).json({ todayVisitors: todayVisitors.length });
+        return res.status(200).json({ todayVisitors: todayVisitors });
       }
     }
   } catch (error) {

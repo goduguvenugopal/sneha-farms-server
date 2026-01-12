@@ -13,6 +13,7 @@ const app = express();
 const server = http.createServer(app);
 
 // Middlewares
+ 
 app.use(corsConfiguration);
 // app.use(cors("*"));
 app.use(express.json());
